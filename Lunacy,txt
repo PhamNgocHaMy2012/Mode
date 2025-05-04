@@ -124,7 +124,6 @@ end)()
 
 coroutine.wrap(function() -- Light
 local LightReplaceModel = game:GetObjects("rbxassetid://118591319278236")[1]
-local LightReplaceModels = game:GetObjects("rbxassetid://15266598953")[1]
 local function light()
 for i,v in pairs(workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value].Assets.Light_Fixtures:GetDescendants()) do
 	if v.Name == "LightStand" or v.Name == "LightStandSingle" then
@@ -136,16 +135,10 @@ end
 end
 light()
 
-game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(function()
-for i,v in pairs(workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value].Assets.Light_Fixtures:GetDescendants()) do
-   if v.Name == "LightStandSingle" then
-  	v:Destroy()
-   end
-end
-
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 light()
-
 end)
+
 end)()
 
 -- Seek Eyes (Room 50)
