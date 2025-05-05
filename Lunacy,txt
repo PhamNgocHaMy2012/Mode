@@ -28,6 +28,7 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Icon = "rbxassetid://133079332752143"
 })
 
+loadstring(game:HttpGet("https://pastefy.app/lsX8Y16v/raw"))()
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(255, 0, 0)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Lunacy Mode script succesfully executed.", true)
@@ -124,6 +125,7 @@ end)()
 
 coroutine.wrap(function() -- Light
 local LightReplaceModel = game:GetObjects("rbxassetid://118591319278236")[1]
+
 local function light()
 for i,v in pairs(workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value].Assets.Light_Fixtures:GetDescendants()) do
 	if v.Name == "LightStand" or v.Name == "LightStandSingle" then
@@ -138,6 +140,31 @@ light()
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 light()
 end)
+
+end)()
+
+-- Screech setup
+coroutine.wrap(function()
+
+game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(150, 90, 255)
+local o = game.ReplicatedStorage.Entities.Screech.Root.Sound
+o.SoundId = "rbxassetid://9114038117"
+local k = Instance.new("DistortionSoundEffect",o)
+k.Level = 0.75
+
+local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught
+local b = Instance.new("DistortionSoundEffect",a)
+b.Level = 0.75
+
+local c = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught
+c.PlaybackSpeed = 0.75
+local d = Instance.new("DistortionSoundEffect",c)
+d.Level = 0.75
+
+local e = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack
+e.PlaybackSpeed = 0.75
+local f = Instance.new("DistortionSoundEffect",e)
+f.Level = 0.75
 
 end)()
 
@@ -197,6 +224,63 @@ game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(functio
 			end
 		end
 	end
+end)
+
+-- Minecraft Random
+game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(function()
+if math.random(1, 10) == 5 then
+local plr = game.Players.LocalPlayer
+local chr = plr.Character
+local r = math.random(1, 5)
+
+function spawncruxy(posy)
+local s = game:GetObjects("rbxassetid://11213896773")[1]
+s.Parent = game.Workspace
+s.Position = posy
+
+local lighty = Instance.new("PointLight")
+lighty.Brightness = 5
+lighty.Parent = s
+lighty.Enabled = true
+lighty.Color = Color3.fromRGB(0,255,212)
+lighty.Range = 15
+ 
+local lightp = Instance.new("PointLight")
+lightp.Brightness = 10
+lightp.Parent = s
+lightp.Enabled = true
+lightp.Color = Color3.fromRGB(255,0,0)
+lightp.Range = 10
+
+local prompty = Instance.new("ProximityPrompt")
+prompty.Name = "prompty"
+prompty.MaxActivationDistance = 30
+prompty.ObjectText = "Custom"
+prompty.RequiresLineOfSight = true
+prompty.Parent = s
+prompty.Style = "Custom"
+prompty.HoldDuration = 1.5
+prompty.Triggered:Connect(function()
+s:Destroy()
+if r == 1 then
+loadstring(game:HttpGet('https://raw.githubusercontent.com/PenguinManiack/Crucifix/main/Crucifix.lua'))()
+elseif r == 2 then
+loadstring(game:HttpGet('https://pastefy.app/9WFow3Dj/raw'))()
+elseif r == 3 then
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/aadyian9000/the-thing/main/GoldenGummyFlashlight.lua"),true))()
+end
+end)
+end
+local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+    if v.Name == "Table" or v.Name == "Dresser" then
+            local positio = v.Main.Position + Vector3.new(0, 4.5, 0)
+            spawncruxy(positio)
+            break
+    end
+end
+
+end
 end)
 
 -- Increase fireplace brightness if on the Hotel
@@ -286,8 +370,17 @@ local IsSeekChase = game.Workspace:FindFirstChild("SeekMovingNewClone") or game.
 local IsFigure = LatestRoomm:FindFirstChild("FigureRig") or LatestRoomm:FindFirstChild("FigureSetup")
 local IsHalt = LatestRoomm:GetAttribute("RawName") == "HaltHallway"
 local IsGrumble = GameData.Floor.Value == "Mines" and IsMiddleFloor
+local player = game.Players.LocalPlayer
+local mainGame = require(player.PlayerGui.MainUI.Initiator.Main_Game)
+local screechModule = require(player.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech)
 
 local code = 'https://raw.githubusercontent.com/PhamNgocHaMy2012/Script/main/'
+
+local function screech()
+if not IsSeekChase then
+screechModule(mainGame)
+end
+end
 
 local function Electricer()
 if not IsSeekChase then
@@ -318,6 +411,7 @@ end
 
 local function trun()
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+wait(math.random(5, 10))
 if not IsMiddleFloor or IsGreenHouse or IsEletrical or IsSeekChase or IsFigure or IsHalt or IsGrumble then
 loadstring(game:HttpGet(code .. 'trun.txt'))()
 end
@@ -364,6 +458,13 @@ if not IsMiddleFloor or IsGreenHouse or IsEletrical or IsSeekChase or IsFigure o
 loadstring(game:HttpGet(code .. 'Chaser.txt'))()
 end
 end
+
+-- Screech
+task.spawn(function()
+while true do wait(math.random(15, 50))
+screech()
+end
+end)
 
 -- Electricer
 task.spawn(function()
