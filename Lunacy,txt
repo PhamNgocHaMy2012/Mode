@@ -254,7 +254,7 @@ lightp.Range = 10
 
 local prompty = Instance.new("ProximityPrompt")
 prompty.Name = "prompty"
-prompty.MaxActivationDistance = 30
+prompty.MaxActivationDistance = 15
 prompty.ObjectText = "Custom"
 prompty.RequiresLineOfSight = true
 prompty.Parent = s
